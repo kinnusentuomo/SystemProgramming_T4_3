@@ -55,7 +55,7 @@ class HTTPGetThread extends Thread
             //System.out.println(allData);'
             observer.onRequestDone(allData);
 
-            Log.d("AllData", allData);
+            //Log.d("AllData", allData);
             //TODO: Observer printtaa data lämpötilan kohdalle
             in.close();
         }

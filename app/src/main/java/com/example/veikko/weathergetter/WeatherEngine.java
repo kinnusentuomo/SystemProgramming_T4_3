@@ -1,15 +1,22 @@
 package com.example.veikko.weathergetter;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.Objects;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class WeatherEngine implements HTTPGetThread.ThreadReport /* implements HTTPGetThread.OnRequestDoneInterface */
 {
+
+    Context mContext;
+
     // This interface is used to report data back to UI
     public interface WeatherDataAvailableInterface
     {
@@ -45,13 +52,34 @@ public class WeatherEngine implements HTTPGetThread.ThreadReport /* implements H
         this.uiCallback = callbackInterface;
     }
 
+    /*
     public void getWeatherData(String city)
     {
         String url = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=65dbec3aae5e5bf9000c7a956c8b76f6";
         HTTPGetThread getter = new HTTPGetThread(url, this, this);
         getter.start();
     }
+*/
 
+    public void setContext(Context c)
+    {
+        mContext = c;
+    }
+
+    public void getWeatherData( )
+    {
+        String city = getSharedPreferences("Main", "city_name");
+        String url = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=65dbec3aae5e5bf9000c7a956c8b76f6";
+        HTTPGetThread getter = new HTTPGetThread(url, this, this);
+        getter.start();
+    }
+
+    //Metodi, jolla voi hakea jaetun String -muuttujan
+    protected String getSharedPreferences(String sharedPrefTag, String sharedVariableTag)
+    {
+        SharedPreferences pref = mContext.getSharedPreferences(sharedPrefTag, MODE_PRIVATE);
+        return pref.getString(sharedVariableTag, null);
+    }
 
     @Override
     public void onRequestDone(String data)
