@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">WeatherGetter</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="city_hint_text">City</string>
+    <string name="get_weather">Get Weather</string>
+    <string name="temp">Temp %s c</string>
+</resources>
